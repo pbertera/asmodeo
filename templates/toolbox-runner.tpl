@@ -1,5 +1,4 @@
 #!/bin/sh
-set -x
 executable="$(basename "$0")"
 
 # I'm in a toolbox
@@ -19,4 +18,4 @@ if [ -n "${TOOLBOX_PATH:-}" ]; then
   exec "${executable}" "$@"
 fi
 
-exec toolbox run -c system restic $@
+exec toolbox run -c {{ container }} {{ cmd }} $@
