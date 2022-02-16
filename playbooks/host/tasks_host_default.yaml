@@ -10,23 +10,6 @@
 - set_fact:
     gnome_shell_current_major: "{{ ((ansible_facts.packages['gnome-shell'] | first).version).split('.') | first }}"
 
-#- name: Create empty vmbr0 bridge {{ task_identifier }}
-#  community.general.nmcli:
-#    type: bridge
-#    conn_name: vmbr0
-#    state: present
-
-#- name: Create directories {{ task_identifier }}
-#  ansible.builtin.file:
-#    path: "{{ directory.path }}"
-#    state: directory
-#    mode: "{{ directory.mode }}"
-#  loop:
-#    - { path: "{{ ansible_user_dir }}/.config/user-tmpfiles.d", mode: "0755" }
-#  loop_control:
-#    loop_var: directory
-
-# TODO: use a config
 - name: Add git settings to ~/.gitconfig {{ task_identifier }}
   community.general.git_config:
     name: "{{ git_config.name }}"
@@ -37,15 +20,27 @@
     loop_var: git_config
 
 # remove and instead downlaod directly from URLs
-- name: Download local packages {{ task_identifier }}
+- name: Download local binary packages {{ task_identifier }}
   get_url:
     url: "{{ app.url }}"
     dest: "{{ ansible_user_dir }}/.local/bin/{{ app.name }}"
     mode: a+x
-  register: local_packages
+  register: bin
   loop_control:
     loop_var: app
-  loop: "{{ host.local_packages }}"
+  loop: "{{ host.local_packages.bins }}"
   retries: 15
   delay: 30
-  until: local_packages.failed == False
+  until: bin.failed == False
+
+- name: Download local binary archive {{ task_identifier }}
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: "{{ app.url }}"
+    dest: "{{ ansible_user_dir }}/.local/bin/"
+    include: "{{ app.include | default([]) }}"
+    include: "{{ app.exclude | default([]) }}"
+    mode: a+x
+  loop_control:
+    loop_var: app
+  loop: "{{ host.local_packages.archives }}"

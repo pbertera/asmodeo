@@ -15,7 +15,7 @@
     - { name: file-roller, state: present }
     - { name: langpacks-en, state: present }
     - { name: langpacks-it, state: present }
-    - { name: pass, state: present }
+    - { name: pass, state: present } # TODO: move into toolbox
     - { name: krb5-workstation, state: present }
     - { name: vim-enhanced, state: present }
     - { name: tilix, state: present }
@@ -23,8 +23,21 @@
     - { name: hexchat, state: present }
 
   local_packages:
-    #- { name: jq, url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" }
-    - { name: yq, url: "https://github.com/mikefarah/yq/releases/download/v4.19.1/yq_linux_amd64" }
+    bins: # this files are just downloaded as-is and placed in ~/.local/bin
+      #- { name: jq, url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" }
+      - { name: yq, url: "https://github.com/mikefarah/yq/releases/download/v4.19.1/yq_linux_amd64" }
+    archives: # Here you can define a list of archives to download and exctract the files defined by `include`
+      - url: https://github.com/todbot/blink1-tool/releases/download/v2.2.0/blink1-tool-v2.2.0-linux-x86_64.zip
+        include:
+          - blink1-tool
+      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.9/openshift-client-linux.tar.gz
+        include:
+          - oc
+          - kubectl
+      # The following is pretty much the same of the item above
+      #- url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.9/openshift-client-linux.tar.gz
+      #  exclude:
+      #    - README.md
 
   pip_packages:
     - { name: pip, state: latest }

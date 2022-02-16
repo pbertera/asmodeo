@@ -89,6 +89,5 @@ The `configs/host.yaml` manages the host configuration:
 
 ## TODO
 
-- [] Use the [unarchive](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/unarchive_module.html) ansible module to unzip local packages
 - [] Manage the local firewall
-
+- [] Use Ubikey for gpg, ssh and VPN
