@@ -48,7 +48,7 @@
       tags: [always]
       args:
         apply:
-          tags: [toolbox, "{{ toolbox.name }}"]
+          tags: [toolbox, "toolbox:{{ toolbox.name }}"]
       loop: "{{ config.toolbox }}"
       loop_control:
         loop_var: toolbox

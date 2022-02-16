@@ -2,7 +2,7 @@
 
 I use this repo to manage the deployment and configuration of my [Fedora Silverblue](https://docs.fedoraproject.org/en-US/fedora-silverblue/) Laptop.
 
-This repo is based on the [JayDoubleu](https://github.com/JayDoubleu) ansiblue [work](https://github.com/JayDoubleu/ansiblue)
+This repo is based on the [JayDoubleu](https://github.com/JayDoubleu) [ansiblue work](https://github.com/JayDoubleu/ansiblue).
 
 ## Quickstart
 
@@ -21,20 +21,20 @@ This repo is based on the [JayDoubleu](https://github.com/JayDoubleu) ansiblue [
 ### Targeting:
 - `ansible-playbook asmodeo.yaml --tags flatpak` <- Run only flatpak tasks
 - `ansible-playbook asmodeo.yaml --tags toolbox` <- Run only toolbox tasks ( for all toolboxes )
-- `ansible-playbook asmodeo.yaml --tags fedora-toolbox-35` <- Run only specific toolbox tasks
+- `ansible-playbook asmodeo.yaml --tags toolbox:fedora-toolbox-35` <- Run only tasks for the toolbox `fedora-toolbox-35`
 - `ansible-playbook asmodeo.yaml --tags host -K` <- Run only host tasks
 
 ## Configuration
 
 Main system configuration is managed via the yaml files in the `configs` directory.
 
-## Flatpack
+## Flatpak
 
-The `configs/flatpack.yaml` defines a list of remotes and the flatpacks you want to add to the system.
+The `configs/flatpak.yaml` defines a list of remotes and the flatpaks you want to add to the system.
 
-* Through the `flatpacks.cmds` field you can define one or more wrapper script into `~/.local/bin/ calling the flatpack:
+* Through the `flatpaks.cmds` field you can define one or more wrapper script into `~/.local/bin/ calling the flatpak:
 ```
-$ cat configs/flatpack.yaml
+$ cat configs/flatpak.yaml
 [...]
 flatpaks:
   - name: org.gnome.TextEditor
@@ -50,7 +50,7 @@ $ cat ~/.local/bin/gedit
 #!/bin/sh
 exec flatpak run --branch=stable --arch=x86_64 org.gnome.gedit "$@"
 ```
-* with the `flatpacks.overrides` you can define one or more override to apply to the installed flatpack
+* with the `flatpaks.overrides` you can define one or more override to apply to the installed flatpack
 * for the other fields please refer to the `community.general.flatpak` ansible module
 
 ## Toolbox
@@ -89,6 +89,6 @@ The `configs/host.yaml` manages the host configuration:
 
 ## TODO
 
-[] Use the [unarchive](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/unarchive_module.html) ansible module to unzip local packages
-[] Manage the local firewall
+- [] Use the [unarchive](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/unarchive_module.html) ansible module to unzip local packages
+- [] Manage the local firewall
 
