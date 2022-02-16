@@ -1,0 +1,11 @@
+- name: Copy bin {{ task_identifier }}
+  ansible.builtin.copy:
+    src: files/bin/
+    dest: "{{ lookup('env','HOME') }}/bin/"
+    mode: preserve
+
+- name: Copy dotfiles {{ task_identifier }}
+  ansible.builtin.copy:
+    src: files/dotfiles/
+    dest: "{{ lookup('env','HOME') }}/"
+    mode: preserve

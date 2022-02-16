@@ -1,0 +1,14 @@
+- name: Copy toolbox-runner {{ task_identifier }}
+  ansible.builtin.copy:
+    src: files/toolbox-runner.sh
+    dest: "{{ lookup('env','HOME') }}/.local/bin/toolbox-runner"
+    mode: a+x
+
+- name: Create toolbox-runner symbolic links {{ task_identifier }}
+  ansible.builtin.file:
+    src: "{{ lookup('env','HOME') }}/.local/bin/toolbox-runner"
+    dest: "{{ lookup('env','HOME') }}/.local/bin/{{ cmd }}"
+    state: link
+  loop: "{{ toolbox.cmds | default([]) }}"
+  loop_control:
+    loop_var: cmd

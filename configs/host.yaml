@@ -1,0 +1,45 @@
+- name: silverado 
+  corporate_net: "disconnected"
+  tasks:
+    - playbooks/host/tasks_host_default.yaml
+    # Red Hat specific configurations
+    - playbooks/host/tasks_host_rh.yaml
+    - playbooks/host/tasks_host_rpm_ostree.yaml
+    - playbooks/host/tasks_host_systemd.yaml
+    - playbooks/host/tasks_host_env.yaml
+    - playbooks/host/tasks_host_python.yaml
+    - playbooks/host/tasks_host_gnome_extensions.yaml
+    - playbooks/host/tasks_host_gnome_dconf.yaml
+
+  layered_packages:
+    - { name: file-roller, state: present }
+    - { name: langpacks-en, state: present }
+    - { name: langpacks-it, state: present }
+    - { name: pass, state: present }
+    - { name: krb5-workstation, state: present }
+    - { name: vim-enhanced, state: present }
+    - { name: tilix, state: present }
+    - { name: google-chrome, state: present }
+    - { name: hexchat, state: present }
+
+  local_packages:
+    #- { name: jq, url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" }
+    - { name: yq, url: "https://github.com/mikefarah/yq/releases/download/v4.19.1/yq_linux_amd64" }
+
+  pip_packages:
+    - { name: pip, state: latest }
+    - { name: powerline-status, state: latest }
+    - { name: powerline-gitstatus, state: latest }
+
+  git_config:
+    - { name: core.editor, scope: global, value: vim }
+    - { name: user.name, scope: global, value: Pietro Bertera }
+    - { name: user.email, scope: global, value: pietro@bertera.it }
+    - { name: init.defaultBranch, scope: global, value: main }
+
+  gnome:
+    extensions: {{ lookup('template', 'configs/host_gnome_extensions.yaml') | from_yaml }}
+    dconf: {{ lookup('template', 'configs/host_gnome_dconf.yaml') | from_yaml }}
+
+  systemd_services:
+    - { name: sshd.service, state: started, enabled: yes, scope: system }

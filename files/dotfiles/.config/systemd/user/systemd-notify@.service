@@ -1,0 +1,6 @@
+[Unit]
+Description=Notify shell about unit failure
+
+[Service]
+Type=oneshot
+ExecStart=notify-send --urgency=normal '%i failed.' 'See "systemctl --user status %i" and "journalctl --user-unit %i" for details.'

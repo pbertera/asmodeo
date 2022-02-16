@@ -1,0 +1,7 @@
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias la='ls -la --color=auto'
+alias ircNick='rhup.sh ircNick'
+alias ircAway='rhup.sh ircAway'
+alias ircBack='rhup.sh ircBack'

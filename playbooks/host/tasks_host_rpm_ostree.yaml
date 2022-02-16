@@ -1,0 +1,19 @@
+- name: Manage overlay packages {{ task_identifier }}
+  tags: [rpm-ostree]
+  community.general.rpm_ostree_pkg:
+    name: "{{ rpm_ostree_pkg.name }}"
+    state: "{{ rpm_ostree_pkg.state }}"
+  loop: "{{ host.layered_packages }}"
+  loop_control:
+    loop_var: rpm_ostree_pkg
+    label: {'name': '{{ rpm_ostree_pkg.name }}', 'state': '{{ rpm_ostree_pkg.state }}'}
+  register: rpm_ostree_pkg_install
+
+- name: rpm-ostree apply-live {{ task_identifier }}
+  tags: [rpm-ostree, rpm-ostree-live-apply]
+  ansible.builtin.shell:
+    cmd: rpm-ostree ex apply-live
+  become: yes
+  when: 
+    - lookup('env', 'RPM_OSTREE_LIVE_UPDATE') == 'true'
+    - rpm_ostree_pkg_install.changed

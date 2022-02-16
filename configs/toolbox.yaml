@@ -1,0 +1,37 @@
+- name: system # the name of this toolbox
+  image: registry.fedoraproject.org/fedora-toolbox:35 # the image to be used
+  shims: # those are commands that are performed on the host
+    - flatpak
+    - systemctl
+    - rpm-ostree
+    - podman
+  packages: # packages to install
+    - oathtool
+    - restic
+  cmds: # wrap those toolbox commands from the host
+    - oathtool
+    - restic
+  user: # configure the user
+    groups: wheel
+  tasks: # playbooks to run
+    - playbooks/toolbox/tasks_toolbox_default.yaml
+    - playbooks/toolbox/tasks_dnf_full_upgrade.yaml
+    - playbooks/toolbox/tasks_dnf_common_packages.yaml
+    - playbooks/toolbox/tasks_toolbox_host_shims.yaml
+    - playbooks/toolbox/tasks_fedora_system.yaml
+    - playbooks/toolbox/tasks_toolbox_cmd.yaml
+
+- name: fedora-35
+  image: registry.fedoraproject.org/fedora-toolbox:35
+  shims:
+    - flatpak
+    - systemctl
+    - rpm-ostree
+    - podman
+  user:
+    groups: wheel
+  tasks: 
+    - playbooks/toolbox/tasks_toolbox_default.yaml
+    - playbooks/toolbox/tasks_dnf_full_upgrade.yaml
+    - playbooks/toolbox/tasks_dnf_common_packages.yaml
+    - playbooks/toolbox/tasks_toolbox_host_shims.yaml

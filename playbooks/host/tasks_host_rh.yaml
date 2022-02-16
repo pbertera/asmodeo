@@ -1,0 +1,58 @@
+- name: Add RHEL8-CSB repository {{ task_identifier }}
+  tags: [rpm-ostree]
+  get_url:
+    url: https://hdn.corp.redhat.com/rhel8-csb/rhel8-csb.repo
+    dest: /etc/yum.repos.d/rhel8-csb.repo
+  become: yes
+  when: host.corporate_net == "connected"
+
+- name: Add RHEL8-CSB repository {{ task_identifier }}
+  tags: [rpm-ostree]
+  ansible.builtin.copy:
+    src: files/etc/yum.repos.d/rhel8-csb.repo
+    dest: /etc/yum.repos.d/rhel8-csb.repo
+  become: yes
+  when: host.corporate_net != "connected"
+
+- name: Add the RH public certiticate {{ task_identifier }}
+  tags: [rpm-ostree]
+  get_url:
+    url: https://password.corp.redhat.com/RH-IT-Root-CA.crt
+    dest: /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt
+  become: yes
+  notify: update ca trust
+  when: host.corporate_net == "connected"
+
+- name: Copy krb5.conf {{ task_identifier }}
+  ansible.builtin.copy:
+    src: files/etc/krb5.conf
+    dest: /etc/krb5.conf
+    mode: 0644
+  become: yes
+
+- name: Check if RedHat packages are installed {{ task_identifier }}
+  package_facts:
+    manager: "auto"
+   
+- name: Pause to setup VPN {{ task_identifier }}
+  pause:
+    prompt: "redhat-internal-cert-install and redhat-internal-NetworkManager-openvpn-profiles not installed, manually install them before continuing https://redhat.service-now.com/help?id=kb_article&sysparm_article=KB0005424"
+  when: "'redhat-internal-cert-install' not in ansible_facts.packages"
+
+- name: Install Red Hat OVPN profiles {{ task_identifier }}
+  tags: [rpm-ostree]
+  community.general.rpm_ostree_pkg:
+    name: redhat-internal-NetworkManager-openvpn-profiles
+    state: present
+  register: rh_ovpn_install
+  when: host.corporate_net == "connected"
+ 
+- name: rpm-ostree apply-live {{ task_identifier }}
+  tags: [rpm-ostree, rpm-ostree-live-apply]
+  ansible.builtin.shell:
+    cmd: rpm-ostree ex apply-live
+  become: yes
+  when:
+    - lookup('env', 'RPM_OSTREE_LIVE_UPDATE') == 'true'
+    - rh_ovpn_install.changed
+    - host.corporate_net == "connected"

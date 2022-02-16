@@ -1,0 +1,8 @@
+- name: Install common software {{ task_identifier }}
+  dnf:
+    state: present
+    name:
+      - git
+      - dnf-plugins-core
+      - curl
+      - bind-utils

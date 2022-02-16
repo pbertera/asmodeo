@@ -1,0 +1,7 @@
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
+if [ -n "${TOOLBOX_PATH:-}" ]; then
+  export POWERLINE_VIRTUAL_ENV_NAME=toolbox
+fi
+. $(pip show powerline-status | grep Location | cut -d \  -f 2)//powerline/bindings/bash/powerline.sh

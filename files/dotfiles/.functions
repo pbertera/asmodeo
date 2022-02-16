@@ -1,0 +1,37 @@
+# date-detailed
+datedetails() {
+    echo "Now:              $(date)"
+    echo "Week of the year: $(date +%W)"
+    echo "Month calendar:   "
+    cal
+}
+
+# Generate a random string $1 is the number of chars, $2 are the chars to remove
+#Eg.:
+# mkpasswd 32 'oO0'
+# mkpasswd 32 '0-9'
+mkpasswd() {
+    base64 /dev/urandom | tr -d "/+$2" | dd bs="$1" count=1 2>/dev/null | xargs echo;
+}
+
+# URL Encode a string
+urlencode() {
+  local string="${1}"
+  local strlen=${#string}
+  local encoded=""
+  for (( pos=0 ; pos<strlen ; pos++ )); do
+     c=${string:$pos:1}
+     case "$c" in [-_.~a-zA-Z0-9] ) o="${c}" ;;
+        * ) printf -v o '%%%02x' "'$c"
+     esac
+     encoded+="${o}"
+  done
+  echo "${encoded}"
+}
+
+# URL Decode a string
+urldecode() {
+    local url_encoded="${1//+/ }"
+    printf '%b' "${url_encoded//%/\\x}"
+}
+

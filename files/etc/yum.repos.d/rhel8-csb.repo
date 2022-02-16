@@ -1,0 +1,10 @@
+[rhel8-csb]
+name=RHEL8 CSB packages
+baseurl=https://hdn.corp.redhat.com/rhel8-csb
+# disabled due to the bad implementation of skip_if_unavailable on rpm-ostree
+# see https://github.com/coreos/rpm-ostree/issues/1602
+enabled=0
+skyp_if_unavailable=True
+gpgcheck=1
+gpgkey=https://hdn.corp.redhat.com/rhel8-csb/RPM-GPG-KEY-helpdesk
+
