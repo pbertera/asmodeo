@@ -56,3 +56,6 @@
     - lookup('env', 'RPM_OSTREE_LIVE_UPDATE') == 'true'
     - rh_ovpn_install.changed
     - host.corporate_net == "connected"
+
+- name: Flush handlers
+  meta: flush_handlers

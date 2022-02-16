@@ -49,15 +49,3 @@
   retries: 15
   delay: 30
   until: local_packages.failed == False
-
-#- name: Set default GRUB timeout to 15 seconds {{ task_identifier }}
-#  lineinfile:
-#    dest: /etc/default/grub
-#    line: GRUB_TIMEOUT=15
-#    regexp: '^(GRUB_TIMEOUT)=[0-9]*$'
-#    state: present
-#  become: yes
-#  notify: grub2-mkconfig
-
-- name: Flush handlers
-  meta: flush_handlers
