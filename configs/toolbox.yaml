@@ -21,17 +21,35 @@
     - playbooks/toolbox/tasks_fedora_system.yaml
     - playbooks/toolbox/tasks_toolbox_cmd.yaml
 
-- name: fedora-35
+- name: yubi
   image: registry.fedoraproject.org/fedora-toolbox:35
   shims:
     - flatpak
     - systemctl
     - rpm-ostree
     - podman
+  cmds:
+    - ykman
+  packages:
+    - python-setuptools
+    - python-pip
+    - swig
+    - gcc
+    - pcsc-lite-devel
+    - python-devel
   user:
+    homedir: /home/yubi # set a different home to avoid overwriting
     groups: wheel
+
+  pip_packages:
+    - { name: pip, state: latest }
+    - { name: yubikey-manager, state: latest }
+
   tasks: 
     - playbooks/toolbox/tasks_toolbox_default.yaml
     - playbooks/toolbox/tasks_dnf_full_upgrade.yaml
     - playbooks/toolbox/tasks_dnf_common_packages.yaml
     - playbooks/toolbox/tasks_toolbox_host_shims.yaml
+    - playbooks/toolbox/tasks_fedora_system.yaml
+    - playbooks/toolbox/tasks_toolbox_cmd.yaml
+    - playbooks/toolbox/tasks_toolbox_python.yaml

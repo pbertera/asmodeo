@@ -63,6 +63,7 @@ You can define:
 - Define any variable to use on the ansible tasks
 - Execute some additional ansible tasks
 - Which packages to install (you must run the task file `playbooks/toolbox/tasks_fedora_system.yaml`)
+- A list of Python pip packages to install (you must run the task file `playbooks/toolbox/tasks_toolbox_python.yaml`)
 - The user and group to configure (you must run the task file `playbooks/common/tasks_toolbox_default.yaml`)
 - A list of commands to be executed on the toolbox from the host (you must run the task file `playbooks/toolbox/tasks_toolbox_cmd.yaml`)
 
@@ -89,5 +90,5 @@ The `configs/host.yaml` manages the host configuration:
 
 ## TODO
 
-- [] Manage the local firewall
-- [] Use Ubikey for gpg, ssh and VPN
+- [ ] Manage the local firewall
+- [ ] Use Ubikey for gpg, ssh and VPN

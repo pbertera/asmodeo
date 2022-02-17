@@ -1,0 +1,8 @@
+- name: Install local pip packages {{ task_identifier }}
+  ansible.builtin.pip:
+    name: "{{ pip_package.name }}"
+    state: "{{ pip_package.state }}"
+    extra_args:  --user
+  loop: "{{ toolbox.pip_packages }}"
+  loop_control:
+    loop_var: pip_package
