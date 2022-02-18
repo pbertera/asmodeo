@@ -10,6 +10,33 @@
     - podman start {{ toolbox.name }}
   loop_control:
     loop_var: toolbox_bootstrap
+  when: toolbox.sandbox_tool == "toolbox"
+
+- name: Ensure {{ toolbox.name }} home directory is present
+  ansible.builtin.file:
+    path: "{{ toolbox.home }}"
+    state: directory
+    mode: '0755'
+  when:
+    - toolbox.sandbox_tool == "distrobox"
+    - toolbox.home is defined
+
+- name: Ensure {{ toolbox.name }} distrobox is created and started
+  shell: "{{ toolbox_bootstrap }}"
+  register: toolbox_create
+  changed_when: false
+  failed_when:
+    - toolbox_create.rc != 0
+    - "'already exists' not in toolbox_create.stderr"
+  loop:
+    - >
+      distrobox create --image {{ toolbox.image }} --name {{ toolbox.name }}
+      {{ ('--home' + ' ' + toolbox.home) if toolbox.home is defined else '' }}
+      {{ ('--additional-flags' + ' ' + toolbox.additional_flags) if toolbox.additional_flags is defined else '' }}
+    - podman start {{ toolbox.name }}
+  loop_control:
+    loop_var: toolbox_bootstrap
+  when: toolbox.sandbox_tool == "distrobox"
 
 - name: Gather container {{ toolbox.name }} facts
   containers.podman.podman_container_info:

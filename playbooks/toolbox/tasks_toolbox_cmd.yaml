@@ -1,10 +1,11 @@
-- name: Create toolbox-runner links {{ task_identifier }}
+- name: Create toolbox-runner {{ task_identifier }}
   ansible.builtin.template:
     src: toolbox-runner.tpl
     mode: a+x
     dest: "{{ lookup('env','HOME') }}/.local/bin/{{ cmd }}"
   vars:
     container: "{{ toolbox.name }}"
+    sandbox_tool: "{{ toolbox.sandbox_tool if toolbox.sandbox_tool is defined else '' }}"
   loop: "{{ toolbox.cmds | default([]) }}"
   loop_control:
     loop_var: cmd

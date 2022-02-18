@@ -53,9 +53,17 @@ exec flatpak run --branch=stable --arch=x86_64 org.gnome.gedit "$@"
 * with the `flatpaks.overrides` you can define one or more override to apply to the installed flatpack
 * for the other fields please refer to the `community.general.flatpak` ansible module
 
-## Toolbox
+## Toolboxes
 
-The `configs/toolbox.yaml` defines the [Fedora toolbox](https://containertoolbx.org/) you want to deploy on the system.
+The `configs/toolbox.yaml` defines container sandboxes to deploy on the system
+
+Supported type of sandoxes are:
+
+- [Fedora toolbox](https://containertoolbx.org/)
+- [Distrobox](https://github.com/89luca89/distrobox)
+
+With distrobox sandboxes you can define a custom home directory do avoid littering the host `HOME`.
+Distrobox allows you also to provide additional args to the container engine
 
 You can define:
 - The name of the toolbox
@@ -90,5 +98,6 @@ The `configs/host.yaml` manages the host configuration:
 
 ## TODO
 
+- [ ] Rename Toolbox to Sandbox
 - [ ] Manage the local firewall
 - [ ] Use Ubikey for gpg, ssh and VPN

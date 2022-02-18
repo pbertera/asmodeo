@@ -2,7 +2,7 @@
 executable="$(basename "$0")"
 
 # I'm in a toolbox
-if [ -n "${TOOLBOX_PATH:-}" ]; then
+if [ -f /run/.containerenv ]; then
 
   # Otherwise do a little dance to find the executable that would have run if not
   # for $0 being on the path, and run that instead.
@@ -18,4 +18,8 @@ if [ -n "${TOOLBOX_PATH:-}" ]; then
   exec "${executable}" "$@"
 fi
 
+{% if sandbox_tool == "distrobox" %}
+exec distrobox enter {{ container }} -- {{ cmd }} $@
+{% else %}
 exec toolbox run -c {{ container }} {{ cmd }} $@
+{% endif %}

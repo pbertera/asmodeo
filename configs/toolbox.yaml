@@ -1,4 +1,5 @@
 - name: system # the name of this toolbox
+  sandbox_tool: toolbox
   image: registry.fedoraproject.org/fedora-toolbox:35 # the image to be used
   shims: # those are commands that are performed on the host
     - flatpak
@@ -21,8 +22,13 @@
     - playbooks/toolbox/tasks_fedora_system.yaml
     - playbooks/toolbox/tasks_toolbox_cmd.yaml
 
-- name: yubi
+- name: yubitest
   image: registry.fedoraproject.org/fedora-toolbox:35
+  # Python pip install things in the home dir
+  # We want to use distrobox with custom home in the container to avoid host's home littering
+  sandbox_tool: distrobox
+  home: "/var/home/pietro/distroboxes/yubi"
+  additional_flags:  --env=DISTROBOX_NAME=yubitest
   shims:
     - flatpak
     - systemctl
@@ -38,7 +44,6 @@
     - pcsc-lite-devel
     - python-devel
   user:
-    homedir: /home/yubi # set a different home to avoid overwriting
     groups: wheel
 
   pip_packages:

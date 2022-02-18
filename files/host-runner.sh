@@ -10,7 +10,7 @@ if [ "$(basename "$(realpath "$0")")" = "${executable}" ]; then
 fi
 
 # This seems like the best way to detect if we're inside a toolbox container.
-if [ -n "${TOOLBOX_PATH:-}" ]; then
+if [ -f /run/.containerenv ]; then
   set -x
   exec flatpak-spawn --host "${executable}" "$@"
 fi
