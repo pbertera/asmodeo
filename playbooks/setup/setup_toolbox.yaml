@@ -38,6 +38,14 @@
     loop_var: toolbox_bootstrap
   when: toolbox.sandbox_tool == "distrobox"
 
+- name: Execute host tasks for toolbox {{ toolbox.name }}
+  include_tasks: "{{ task }}"
+  loop: "{{ toolbox.host_tasks }}"
+  loop_control:
+    loop_var: task
+  vars:
+    task_identifier: "(Toolbox: {{ toolbox.name }})"
+
 - name: Gather container {{ toolbox.name }} facts
   containers.podman.podman_container_info:
     name: ["{{ toolbox.name }}"]
@@ -58,7 +66,7 @@
   block:
     - name: Run tasks on {{ toolbox.name }} container
       include_tasks: "{{ task }}"
-      loop: "{{ toolbox.tasks }}"
+      loop: "{{ toolbox.sandbox_tasks }}"
       loop_control:
         loop_var: task
       vars:

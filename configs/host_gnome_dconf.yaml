@@ -15,7 +15,7 @@
 - key: /org/gnome/desktop/interface/clock-show-seconds
   value: "true"
 - key: /org/gnome/desktop/peripherals/touchpad/natural-scroll
-  value: "false" 
+  value: "true"
 - key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
   value: "true" 
 - key: /org/gnome/desktop/peripherals/touchpad/disable-while-typing

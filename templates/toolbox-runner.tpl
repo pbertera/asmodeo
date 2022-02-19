@@ -19,7 +19,7 @@ if [ -f /run/.containerenv ]; then
 fi
 
 {% if sandbox_tool == "distrobox" %}
-exec distrobox enter {{ container }} -- {{ cmd }} $@
+exec distrobox enter {{ container }} -- bash -l -c "{{ cmd }} $@"
 {% else %}
 exec toolbox run -c {{ container }} {{ cmd }} $@
 {% endif %}

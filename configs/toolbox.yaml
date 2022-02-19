@@ -14,7 +14,7 @@
     - restic
   user: # configure the user
     groups: wheel
-  tasks: # playbooks to run
+  sandbox_tasks: # playbooks to run in the sandobx
     - playbooks/toolbox/tasks_toolbox_default.yaml
     - playbooks/toolbox/tasks_dnf_full_upgrade.yaml
     - playbooks/toolbox/tasks_dnf_common_packages.yaml
@@ -22,7 +22,7 @@
     - playbooks/toolbox/tasks_fedora_system.yaml
     - playbooks/toolbox/tasks_toolbox_cmd.yaml
 
-- name: yubitest
+- name: yubi
   image: registry.fedoraproject.org/fedora-toolbox:35
   # Python pip install things in the home dir
   # We want to use distrobox with custom home in the container to avoid host's home littering
@@ -47,14 +47,16 @@
     groups: wheel
 
   pip_packages:
-    - { name: pip, state: latest }
-    - { name: yubikey-manager, state: latest }
+    - { name: pip, state: latest, sandbox_user: pietro, extra_args: '--user' }
+    - { name: yubikey-manager, state: latest, user: sandbox_pietro, extra_args: '--user' }
 
-  tasks: 
+  host_tasks: # playbooks to run on the host
+    - playbooks/toolbox/tasks_toolbox_cmd.yaml
+
+  sandbox_tasks:
     - playbooks/toolbox/tasks_toolbox_default.yaml
     - playbooks/toolbox/tasks_dnf_full_upgrade.yaml
     - playbooks/toolbox/tasks_dnf_common_packages.yaml
     - playbooks/toolbox/tasks_toolbox_host_shims.yaml
     - playbooks/toolbox/tasks_fedora_system.yaml
-    - playbooks/toolbox/tasks_toolbox_cmd.yaml
     - playbooks/toolbox/tasks_toolbox_python.yaml

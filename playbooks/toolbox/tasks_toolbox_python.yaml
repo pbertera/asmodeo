@@ -2,7 +2,9 @@
   ansible.builtin.pip:
     name: "{{ pip_package.name }}"
     state: "{{ pip_package.state }}"
-    extra_args:  --user
+    extra_args:  "{{ pip_package.extra_args if pip_package.extra_args is defined else '' }}"
+  vars:
+    ansible_user: "{{ pip_package.sandbox_user | default('root') }}"
   loop: "{{ toolbox.pip_packages }}"
   loop_control:
     loop_var: pip_package

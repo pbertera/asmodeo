@@ -38,7 +38,6 @@
     remote_src: yes
     src: "{{ app.url }}"
     dest: "{{ ansible_user_dir }}/.local/bin/"
-    include: "{{ app.include | default([]) }}"
     include: "{{ app.exclude | default([]) }}"
     mode: a+x
   loop_control:
