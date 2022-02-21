@@ -15,6 +15,7 @@
         cmd: echo "sudo password correct"
       become: yes
       changed_when: false
+      tags: [always]
 
     - name: Ensure directory {{ lookup('env','HOME') }}/.local/bin exists
       ansible.builtin.file:
