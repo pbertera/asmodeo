@@ -40,7 +40,7 @@
 
 - name: Execute host tasks for toolbox {{ toolbox.name }}
   include_tasks: "{{ task }}"
-  loop: "{{ toolbox.host_tasks }}"
+  loop: "{{ toolbox.host_tasks | default([]) }}"
   loop_control:
     loop_var: task
   vars:

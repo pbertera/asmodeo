@@ -9,9 +9,11 @@
   packages: # packages to install
     - oathtool
     - restic
+    - nmap
   cmds: # wrap those toolbox commands from the host
     - oathtool
     - restic
+    - nmap
   user: # configure the user
     groups: wheel
   sandbox_tasks: # playbooks to run in the sandobx
