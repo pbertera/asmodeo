@@ -1,0 +1,7 @@
+- name: Copy /etc {{ task_identifier }}
+  ansible.builtin.copy:
+    src: files/etc/
+    dest: "/etc/"
+    mode: preserve
+  become: yes
+

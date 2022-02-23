@@ -10,6 +10,7 @@
     - playbooks/host/tasks_host_python.yaml
     - playbooks/host/tasks_host_gnome_extensions.yaml
     - playbooks/host/tasks_host_gnome_dconf.yaml
+    - playbooks/host/tasks_host_etc.yaml
 
   layered_packages:
     - { name: file-roller, state: present }
