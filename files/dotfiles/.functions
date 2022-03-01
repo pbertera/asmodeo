@@ -1,9 +1,9 @@
 # date-detailed
 datedetails() {
-    echo "Now:              $(date)"
-    echo "Week of the year: $(date +%W)"
-    echo "Month calendar:   "
-    cal
+  echo "Now:              $(date)"
+  echo "Week of the year: $(date +%W)"
+  echo "Month calendar:   "
+  cal
 }
 
 # Generate a random string $1 is the number of chars, $2 are the chars to remove
@@ -11,7 +11,7 @@ datedetails() {
 # mkpasswd 32 'oO0'
 # mkpasswd 32 '0-9'
 mkpasswd() {
-    base64 /dev/urandom | tr -d "/+$2" | dd bs="$1" count=1 2>/dev/null | xargs echo;
+  base64 /dev/urandom | tr -d "/+$2" | dd bs="$1" count=1 2>/dev/null | xargs echo;
 }
 
 # URL Encode a string
@@ -20,18 +20,69 @@ urlencode() {
   local strlen=${#string}
   local encoded=""
   for (( pos=0 ; pos<strlen ; pos++ )); do
-     c=${string:$pos:1}
-     case "$c" in [-_.~a-zA-Z0-9] ) o="${c}" ;;
-        * ) printf -v o '%%%02x' "'$c"
-     esac
-     encoded+="${o}"
+    c=${string:$pos:1}
+    case "$c" in [-_.~a-zA-Z0-9] ) o="${c}" ;;
+      * ) printf -v o '%%%02x' "'$c"
+    esac
+    encoded+="${o}"
   done
   echo "${encoded}"
 }
 
 # URL Decode a string
 urldecode() {
-    local url_encoded="${1//+/ }"
-    printf '%b' "${url_encoded//%/\\x}"
+  local url_encoded="${1//+/ }"
+  printf '%b' "${url_encoded//%/\\x}"
 }
 
+# Create a new directory and enter it
+mkd() {
+  mkdir -p "$@" && cd "$@"
+}
+
+# Show all the names (CNs and SANs) listed in the SSL certificate
+# for a given domain
+getcertnames() {
+  if [ -z "${1}" ]; then
+    echo "ERROR: No domain specified."
+    return 1
+  fi
+
+  local domain="${1}"
+  echo "Testing ${domain}…"
+  echo ""; # newline
+
+  local tmp=$(echo "GET / HTTP/1.0" | openssl s_client -connect "${domain}:443" 2>&1)
+
+  if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
+    local certText=$(echo "${tmp}" | openssl x509 -text -certopt "no_header, no_serial, no_version, \
+      no_signame, no_validity, no_issuer, no_pubkey, no_sigdump, no_aux")
+    echo "Common Name:"
+    echo ""; # newline
+    echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//"
+    echo ""; # newline
+    echo "Subject Alternative Name(s):"
+    echo ""; # newline
+    echo "${certText}" | grep -A 1 "Subject Alternative Name:" | sed -e "2s/DNS://g" -e "s/ //g" | tr "," "\n" | tail -n +2
+    return 0
+  else
+    echo "ERROR: Certificate not found."
+    return 1
+  fi
+}
+
+# Split a cert bunbdle
+opensslbundle() {
+  bundle="$1"
+  shift
+  while read line
+  do
+    if [ "${line//END}" != "$line" ]; then
+        txt="$txt$line\n"
+        printf -- "$txt" | openssl x509 $@
+        txt=""
+    else
+        txt="$txt$line\n"
+    fi
+  done < "$bundle"
+}
