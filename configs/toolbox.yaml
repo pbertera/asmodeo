@@ -11,11 +11,13 @@
     - restic
     - nmap
     - openssl
+    - strace
   cmds: # wrap those toolbox commands from the host
     - oathtool
     - restic
     - nmap
     - openssl
+    - strace
   user: # configure the user
     groups: wheel
   sandbox_tasks: # playbooks to run in the sandobx
