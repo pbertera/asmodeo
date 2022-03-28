@@ -23,6 +23,8 @@
     - { name: google-chrome, state: present }
     - { name: hexchat, state: present }
     - { name: distrobox, state: present }
+    - { name: wireshark, state: present }
+    - { name: wireshark-cli, state: present }
 
   local_packages:
     bins: # this files are just downloaded as-is and placed in ~/.local/bin
