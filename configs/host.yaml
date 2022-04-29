@@ -34,10 +34,13 @@
       - url: https://github.com/todbot/blink1-tool/releases/download/v2.2.0/blink1-tool-v2.2.0-linux-x86_64.zip
         include:
           - blink1-tool
-      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.9/openshift-client-linux.tar.gz
+      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.10/openshift-client-linux.tar.gz
         include:
           - oc
           - kubectl
+      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest-4.10/opm-linux.tar.gz
+        include:
+          - opm
       # The following is pretty much the same of the item above
       #- url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.9/openshift-client-linux.tar.gz
       #  exclude:
