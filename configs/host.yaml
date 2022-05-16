@@ -50,6 +50,8 @@
     - { name: pip, state: latest }
     - { name: powerline-status, state: latest }
     - { name: powerline-gitstatus, state: latest }
+    - { name: powerline-gitstatus, state: latest }
+    - { name: o-must-gather, state: latest }
 
   git_config:
     - { name: core.editor, scope: global, value: vim }
