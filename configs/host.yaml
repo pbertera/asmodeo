@@ -44,6 +44,9 @@
       - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest-4.10/opm-linux.tar.gz
         include:
           - opm
+      - url: https://git.sr.ht/~gpanders/ijq/refs/download/v0.3.8/ijq-0.3.8-linux-amd64.tar.gz
+        include:
+          - ijq
       # The following is pretty much the same of the item above
       #- url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.9/openshift-client-linux.tar.gz
       #  exclude:
