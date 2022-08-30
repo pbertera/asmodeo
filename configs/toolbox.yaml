@@ -6,12 +6,15 @@
     - systemctl
     - rpm-ostree
     - podman
+    - teseq
   packages: # packages to install
     - oathtool
     - restic
     - nmap
     - openssl
     - strace
+    - jq
+    - teseq
   cmds: # wrap those toolbox commands from the host
     - oathtool
     - restic

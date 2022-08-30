@@ -27,6 +27,7 @@
     - { name: wireshark-cli, state: present }
     - { name: make, state: present }
     - { name: golang, state: present }
+    - { name: autokey-gtk, state: present }
 
   local_packages:
     bins: # this files are just downloaded as-is and placed in ~/.local/bin
