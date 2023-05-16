@@ -1,12 +1,11 @@
-- name: system # the name of this toolbox
+- name: system-f37 # the name of this toolbox
   sandbox_tool: toolbox
-  image: registry.fedoraproject.org/fedora-toolbox:35 # the image to be used
+  image: registry.fedoraproject.org/fedora-toolbox:37 # the image to be used
   shims: # those are commands that are performed on the host
     - flatpak
     - systemctl
     - rpm-ostree
     - podman
-    - teseq
   packages: # packages to install
     - oathtool
     - restic
@@ -14,13 +13,16 @@
     - openssl
     - strace
     - jq
-    - teseq
+    - asciinema
+    - wine
   cmds: # wrap those toolbox commands from the host
     - oathtool
     - restic
     - nmap
     - openssl
     - strace
+    - asciinema
+    - wine
   user: # configure the user
     groups: wheel
   sandbox_tasks: # playbooks to run in the sandobx

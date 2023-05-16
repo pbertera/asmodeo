@@ -28,6 +28,11 @@
     - { name: make, state: present }
     - { name: golang, state: present }
     - { name: autokey-gtk, state: present }
+    - { name: virt-install, state: present }
+    - { name: virt-manager, state: present }
+    - { name: virt-viewer, state: present }
+    - { name: qemu-kvm, state: present }
+    - { name: guestfs-tools, state: present }
 
   local_packages:
     bins: # this files are just downloaded as-is and placed in ~/.local/bin
@@ -38,11 +43,11 @@
       - url: https://github.com/todbot/blink1-tool/releases/download/v2.2.0/blink1-tool-v2.2.0-linux-x86_64.zip
         include:
           - blink1-tool
-      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.10/openshift-client-linux.tar.gz
+      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable-4.12/openshift-client-linux.tar.gz
         include:
           - oc
           - kubectl
-      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest-4.10/opm-linux.tar.gz
+      - url: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest-4.12/opm-linux.tar.gz
         include:
           - opm
       - url: https://git.sr.ht/~gpanders/ijq/refs/download/v0.3.8/ijq-0.3.8-linux-amd64.tar.gz
