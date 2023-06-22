@@ -78,3 +78,9 @@ flatpaks:
     method: user
     remote: flathub
     cmds: [keepassxc]
+
+  - name: md.obsidian.Obsidian
+    state: present
+    method: user
+    remote: flathub
+    cmds: [obsidian]
