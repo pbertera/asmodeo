@@ -1,6 +1,6 @@
-- name: system-f37 # the name of this toolbox
+- name: system-f38 # the name of this toolbox
   sandbox_tool: toolbox
-  image: registry.fedoraproject.org/fedora-toolbox:37 # the image to be used
+  image: registry.fedoraproject.org/fedora-toolbox:38 # the image to be used
   shims: # those are commands that are performed on the host
     - flatpak
     - systemctl
@@ -33,41 +33,41 @@
     - playbooks/toolbox/tasks_fedora_system.yaml
     - playbooks/toolbox/tasks_toolbox_cmd.yaml
 
-- name: yubi
-  image: registry.fedoraproject.org/fedora-toolbox:35
-  # Python pip install things in the home dir
-  # We want to use distrobox with custom home in the container to avoid host's home littering
-  sandbox_tool: distrobox
-  home: "/var/home/pietro/distroboxes/yubi"
-  additional_flags:  --env=DISTROBOX_NAME=yubitest
-  shims:
-    - flatpak
-    - systemctl
-    - rpm-ostree
-    - podman
-  cmds:
-    - ykman
-  packages:
-    - python-setuptools
-    - python-pip
-    - swig
-    - gcc
-    - pcsc-lite-devel
-    - python-devel
-  user:
-    groups: wheel
-
-  pip_packages:
-    - { name: pip, state: latest, sandbox_user: pietro, extra_args: '--user' }
-    - { name: yubikey-manager, state: latest, user: sandbox_pietro, extra_args: '--user' }
-
-  host_tasks: # playbooks to run on the host
-    - playbooks/toolbox/tasks_toolbox_cmd.yaml
-
-  sandbox_tasks:
-    - playbooks/toolbox/tasks_toolbox_default.yaml
-    - playbooks/toolbox/tasks_dnf_full_upgrade.yaml
-    - playbooks/toolbox/tasks_dnf_common_packages.yaml
-    - playbooks/toolbox/tasks_toolbox_host_shims.yaml
-    - playbooks/toolbox/tasks_fedora_system.yaml
-    - playbooks/toolbox/tasks_toolbox_python.yaml
+#- name: yubi
+#  image: registry.fedoraproject.org/fedora-toolbox:38
+#  # Python pip install things in the home dir
+#  # We want to use distrobox with custom home in the container to avoid host's home littering
+#  sandbox_tool: distrobox
+#  home: "~/distroboxes/yubi"
+#  additional_flags:  --env=DISTROBOX_NAME=yubitest
+#  shims:
+#    - flatpak
+#    - systemctl
+#    - rpm-ostree
+#    - podman
+#  cmds:
+#    - ykman
+#  packages:
+#    - python-setuptools
+#    - python-pip
+#    - swig
+#    - gcc
+#    - pcsc-lite-devel
+#    - python-devel
+#  user:
+#    groups: wheel
+#
+#  pip_packages:
+#    - { name: pip, state: latest, sandbox_user: pietro, extra_args: '--user' }
+#    - { name: yubikey-manager, state: latest, user: sandbox_pietro, extra_args: '--user' }
+#
+#  host_tasks: # playbooks to run on the host
+#    - playbooks/toolbox/tasks_toolbox_cmd.yaml
+#
+#  sandbox_tasks:
+#    - playbooks/toolbox/tasks_toolbox_default.yaml
+#    - playbooks/toolbox/tasks_dnf_full_upgrade.yaml
+#    - playbooks/toolbox/tasks_dnf_common_packages.yaml
+#    - playbooks/toolbox/tasks_toolbox_host_shims.yaml
+#    - playbooks/toolbox/tasks_fedora_system.yaml
+#    - playbooks/toolbox/tasks_toolbox_python.yaml

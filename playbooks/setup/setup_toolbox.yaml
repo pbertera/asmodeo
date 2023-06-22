@@ -10,7 +10,8 @@
     - podman start {{ toolbox.name }}
   loop_control:
     loop_var: toolbox_bootstrap
-  when: toolbox.sandbox_tool == "toolbox"
+  when:
+    - toolbox.sandbox_tool == "toolbox"
 
 - name: Ensure {{ toolbox.name }} home directory is present
   ansible.builtin.file:
@@ -36,7 +37,8 @@
     - podman start {{ toolbox.name }}
   loop_control:
     loop_var: toolbox_bootstrap
-  when: toolbox.sandbox_tool == "distrobox"
+  when:
+    - toolbox.sandbox_tool == "distrobox"
 
 - name: Execute host tasks for toolbox {{ toolbox.name }}
   include_tasks: "{{ task }}"

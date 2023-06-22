@@ -22,7 +22,7 @@
   loop: "{{ gnome_extensions_stat.results }}"
   loop_control:
     loop_var: gnome_extension
-    label: {'uuid': '{{ gnome_extension.extension.uuid }}'}
+    label: "{'uuid': '{{ gnome_extension.extension.uuid }}'}"
 
 - name: Download gnome shell extensions {{ task_identifier }}
   ansible.builtin.get_url:
@@ -32,7 +32,7 @@
   loop: "{{ gnome_extension_download_urls.results }}"
   loop_control:
     loop_var: extension_url
-    label: {'uuid': '{{ extension_url.gnome_extension.extension.uuid }}'}
+    label: "{'uuid': '{{ extension_url.gnome_extension.extension.uuid }}'}"
   register: gnome_extension_zips
 
 - name: Install gnome shell extensions {{ task_identifier }}
@@ -43,7 +43,7 @@
   loop: "{{ gnome_extension_zips.results }}"
   loop_control:
     loop_var: extension_install
-    label: {'uuid': '{{ extension_install.extension_url.gnome_extension.extension.uuid }}'}
+    label: "{'uuid': '{{ extension_install.extension_url.gnome_extension.extension.uuid }}'}"
 
 - name: Enable gnome shell extensions {{ task_identifier }}
   community.general.dconf:

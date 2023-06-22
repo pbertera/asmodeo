@@ -4,7 +4,7 @@
 # Setting "gnome_version" to "current" might break if extension is not published for your version.
 - { uuid: "background-logo@fedorahosted.org", enabled: no }
 - { uuid: "gTile@vibou", gnome_version: current, enabled: yes }
-- { uuid: "all-windows@ezix.org", gnome_version: current, enabled: yes }
+#- { uuid: "all-windows@ezix.org", gnome_version: current, enabled: yes }
 - { uuid: "caffeine@patapon.info", gnome_version: current, enabled: yes }
 - { uuid: "clipboard-indicator@tudmotu.com", gnome_version: current, enabled: yes }
 - { uuid: "apps-menu@gnome-shell-extensions.gcampax.github.com", gnome_version: current, enabled: yes }

@@ -6,8 +6,9 @@
   loop: "{{ host.layered_packages }}"
   loop_control:
     loop_var: rpm_ostree_pkg
-    label: {'name': '{{ rpm_ostree_pkg.name }}', 'state': '{{ rpm_ostree_pkg.state }}'}
+    label: "{'name': '{{ rpm_ostree_pkg.name }}', 'state': '{{ rpm_ostree_pkg.state }}'}"
   register: rpm_ostree_pkg_install
+  become: yes
 
 - name: rpm-ostree apply-live {{ task_identifier }}
   tags: [rpm-ostree, rpm-ostree-live-apply]

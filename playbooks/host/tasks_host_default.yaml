@@ -2,6 +2,7 @@
   ansible.builtin.hostname:
     name: "{{ host.name }}"
     use: systemd
+  become: yes
 
 - name: Gather the package facts {{ task_identifier }} 
   ansible.builtin.package_facts:

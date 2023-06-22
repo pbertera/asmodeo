@@ -34,7 +34,7 @@ flatpaks:
   - name: org.gimp.GIMP
     state: present
     method: system
-    remote: fedora
+    remote: flathub
     cmds: [gimp]
 
   - name: org.gnome.gedit

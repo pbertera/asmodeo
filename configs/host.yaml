@@ -20,7 +20,8 @@
     - { name: krb5-workstation, state: present }
     - { name: vim-enhanced, state: present }
     - { name: tilix, state: present }
-    - { name: google-chrome, state: present }
+#    - { name: google-chrome, state: present }
+    - { name: chromium, state: present }
     - { name: hexchat, state: present }
     - { name: distrobox, state: present }
     - { name: wireshark, state: present }
@@ -39,6 +40,7 @@
       #- { name: jq, url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" }
       - { name: yq, url: "https://github.com/mikefarah/yq/releases/download/v4.19.1/yq_linux_amd64" }
       - { name: ocm, url: "https://github.com/openshift-online/ocm-cli/releases/download/v0.1.63/ocm-linux-amd64" }
+      - { name: omc, url: "https://github.com/gmeghnag/omc/releases/download/v3.0.3/omc_Linux_x86_64" }
     archives: # Here you can define a list of archives to download and exctract the files defined by `include`
       - url: https://github.com/todbot/blink1-tool/releases/download/v2.2.0/blink1-tool-v2.2.0-linux-x86_64.zip
         include:

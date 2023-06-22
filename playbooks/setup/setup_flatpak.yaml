@@ -1,9 +1,19 @@
-- name: Make {{ flatpak.name }} flatpak {{ flatpak.state }} {{ 'using ' + flatpak.remote + ' remote' if flatpak.state == 'present' }}
+- name: Make {{ flatpak.name }} flatpak {{ flatpak.state }} {{ 'using ' + flatpak.remote + ' remote' if flatpak.state == 'present' }} (system)
+  become: yes
   community.general.flatpak:
     name: "{{ flatpak.name }}"
     state: "{{ flatpak.state }}"
     method: "{{ flatpak.method }}"
     remote: "{{ flatpak.remote }}"
+  when: flatpak.method == "system"
+
+- name: Make {{ flatpak.name }} flatpak {{ flatpak.state }} {{ 'using ' + flatpak.remote + ' remote' if flatpak.state == 'present' }} (user)
+  community.general.flatpak:
+    name: "{{ flatpak.name }}"
+    state: "{{ flatpak.state }}"
+    method: "{{ flatpak.method }}"
+    remote: "{{ flatpak.remote }}"
+  when: flatpak.method == "user"
 
 - name: Make local bin wrapper {{ flatpak.name }} {{ flatpak.state }} in {{ lookup('env','HOME') }}/.local/bin/
   ansible.builtin.copy:
